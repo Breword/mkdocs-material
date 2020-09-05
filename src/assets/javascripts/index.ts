@@ -28,6 +28,7 @@ import "focus-visible"
 
 import { sortBy, prop, values } from "ramda"
 import {
+  Observable,
   merge,
   combineLatest,
   animationFrameScheduler,
@@ -139,6 +140,12 @@ export function resetScrollLock(
  * Functions
  * ------------------------------------------------------------------------- */
 
+let document$: Observable<Document>
+
+export function listenDocument() {
+  document$ = watchDocument()
+}
+
 /**
  * Initialize Material for MkDocs
  *
@@ -149,7 +156,6 @@ export function initialize(config: unknown) {
     throw new SyntaxError(`Invalid configuration: ${JSON.stringify(config)}`)
 
   /* Set up subjects */
-  const document$ = watchDocument()
   const location$ = watchLocation()
 
   /* Set up user interface observables */
