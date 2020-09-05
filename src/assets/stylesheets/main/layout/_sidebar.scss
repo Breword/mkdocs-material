@@ -26,7 +26,7 @@
 
 // Active (toggled) drawer
 $md-toggle__drawer--checked:
-  "[data-md-toggle=\"drawer\"]:checked ~ .md-container";
+  "[data-md-toggle=\"drawer\"]:checked ~ #root .md-container";
 
 // ----------------------------------------------------------------------------
 // Keyframes
