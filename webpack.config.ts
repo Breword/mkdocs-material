@@ -82,7 +82,7 @@ function config(args: Configuration): Configuration {
               loader: "css-loader",
               options: {
                 url: false,
-                sourceMap: true
+                sourceMap: false,
               }
             },
             {
@@ -105,7 +105,7 @@ function config(args: Configuration): Configuration {
                     encode: false
                   })
                 ],
-                sourceMap: true
+                sourceMap: false,
               }
             },
             {
@@ -119,7 +119,7 @@ function config(args: Configuration): Configuration {
                     "node_modules/material-shadows"
                   ]
                 },
-                sourceMap: true
+                sourceMap: false,
               }
             }
           ]
@@ -158,7 +158,8 @@ function config(args: Configuration): Configuration {
     ],
 
     /* Source maps */
-    devtool: args.mode === "production" ? "source-map" : "eval",
+    // DO NOT GENERATE SOURCE MAPS
+    // devtool: args.mode === "production" ? "source-map" : "eval",
 
     /* Filter false positives and omit verbosity */
     stats: {
