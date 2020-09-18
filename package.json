@@ -29,7 +29,7 @@
     "lint": "npm run lint:ts && npm run lint:scss",
     "lint:scss": "npx stylelint \"src/assets/**/*.scss\"",
     "lint:ts": "npx tslint -p tsconfig.json \"src/**/*.ts\"",
-    "start": "npx webpack --mode development --watch"
+    "start": "npx webpack --mode development"
   },
   "dependencies": {
     "clipboard": "^2.0.6",

@@ -253,15 +253,16 @@ export function initialize(config: unknown) {
           ? config.search.index
           : undefined
 
+        const searchIndexDataUrl = config.search.indexDataurl
+
         /* Fetch index if it wasn't passed explicitly */
         const index$ = typeof index !== "undefined"
           ? from(index)
           : base$
               .pipe(
                 switchMap(base => ajax({
-                  url: `${base}/search/search_index.json`,
+                  url: searchIndexDataUrl || `${base}/search/search_index.json`,
                   responseType: "json",
-                  withCredentials: true
                 })
                   .pipe<SearchIndex>(
                     pluck("response")
@@ -376,7 +377,6 @@ export function initialize(config: unknown) {
         switchMap(base => ajax({
           url: `${base}/sitemap.xml`,
           responseType: "document",
-          withCredentials: true
         })
           .pipe<Document>(
             pluck("response")

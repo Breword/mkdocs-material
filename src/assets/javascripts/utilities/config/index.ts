@@ -42,6 +42,7 @@ export interface Config {
   base: string                         /* Base URL */
   features: Feature[]                  /* Feature flags */
   search: {
+    indexDataurl: string               /* Request url of index JSON data */
     worker: string                     /* Worker URL */
     index?: Promise<SearchIndex>       /* Promise resolving with index */
     transform?: SearchTransformFn      /* Transformation function */

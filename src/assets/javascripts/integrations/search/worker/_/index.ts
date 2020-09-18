@@ -105,6 +105,9 @@ export function setupSearchWorker(
 ): WorkerHandler<SearchMessage> {
   const worker = new Worker(url)
 
+  // Breword customize, to make search result item prefixed with access url path
+  const accessUrl = window.location.pathname.split('/')[1]
+
   /* Create communication channels and resolve relative links */
   const tx$ = new Subject<SearchMessage>()
   const rx$ = watchWorker(worker, { tx$ })
@@ -113,9 +116,9 @@ export function setupSearchWorker(
       map(([message, base]) => {
         if (isSearchResultMessage(message)) {
           for (const { article, sections } of message.data) {
-            article.location = `${base}/${article.location}`
+            article.location = `/${accessUrl}${article.location}`
             for (const section of sections)
-              section.location = `${base}/${section.location}`
+              section.location = `/${accessUrl}${section.location}`
           }
         }
         return message

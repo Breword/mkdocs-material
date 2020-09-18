@@ -31,12 +31,12 @@ import { h, truncate } from "utilities"
  * CSS classes
  */
 const css = {
-  item:    "md-search-result__item",
-  link:    "md-search-result__link",
+  item: "md-search-result__item",
+  link: "md-search-result__link",
   article: "md-search-result__article md-search-result__article--document",
   section: "md-search-result__article",
-  title:   "md-search-result__title",
-  teaser:  "md-search-result__teaser"
+  title: "md-search-result__title",
+  teaser: "md-search-result__teaser"
 }
 
 /* ------------------------------------------------------------------------- */

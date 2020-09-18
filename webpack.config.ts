@@ -158,8 +158,7 @@ function config(args: Configuration): Configuration {
     ],
 
     /* Source maps */
-    // DO NOT GENERATE SOURCE MAPS
-    // devtool: args.mode === "production" ? "source-map" : "eval",
+    devtool: args.mode !== "production" && "source-map",
 
     /* Filter false positives and omit verbosity */
     stats: {
