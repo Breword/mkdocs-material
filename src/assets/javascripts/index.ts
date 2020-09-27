@@ -329,9 +329,6 @@ export function initialize(config: unknown) {
     )
       .subscribe(hash => setLocationHash(`#${hash}`))
 
-  // 解决 anchor hash 跳转问题
-  hash$.subscribe(hash => console.log(hash))
-
   // TODO: scroll restoration must be centralized
   combineLatest([
     watchToggle("search"),
