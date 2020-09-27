@@ -23,6 +23,7 @@
 import {
   MonoTypeOperatorFunction,
   Observable,
+  fromEvent,
   animationFrameScheduler,
   pipe
 } from "rxjs"
@@ -36,7 +37,11 @@ import {
   withLatestFrom
 } from "rxjs/operators"
 
-import { getElementOrThrow } from "browser"
+import {
+  setToggle,
+  getElements,
+  getElementOrThrow,
+} from "browser"
 import { SearchResult } from "integrations/search"
 import { renderSearchResult } from "templates"
 
@@ -64,6 +69,19 @@ interface ApplyOptions {
 /* ----------------------------------------------------------------------------
  * Functions
  * ------------------------------------------------------------------------- */
+
+function handleLinkClick(e) {
+  e.preventDefault()
+  const { currentTarget } = e
+  const href = currentTarget.getAttribute('href')
+
+  // 隐藏 search bar
+  setToggle('search', false)
+
+  // 使用 react router 中的 history.push 进行不刷新的跳转
+  window.brewordJumpToUrl(href)
+}
+
 
 /**
  * Apply search results
@@ -108,6 +126,12 @@ export function applySearchResult(
             if (container.scrollHeight - container.offsetHeight > 16)
               break
           }
+
+          const anchors = getElements('a', list)
+          if (anchors.length > 0) {
+            fromEvent(anchors, 'click').subscribe(handleLinkClick)
+          }
+
           return index
         }, 0),
 

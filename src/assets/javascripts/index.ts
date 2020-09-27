@@ -308,7 +308,10 @@ export function initialize(config: unknown) {
             mountSearch(worker, { query$, reset$, result$ }),
           )
       }),
-      catchError(() => {
+      catchError((err) => {
+        // 一旦搜索栏代码出错，在这里需要打印错误
+        console.error(err)
+
         useComponent("search")
           .subscribe(el => el.hidden = true) // TODO: Hack
         return NEVER
@@ -325,6 +328,9 @@ export function initialize(config: unknown) {
       delay(125), // ensure that it runs after the body scroll reset...
     )
       .subscribe(hash => setLocationHash(`#${hash}`))
+
+  // 解决 anchor hash 跳转问题
+  hash$.subscribe(hash => console.log(hash))
 
   // TODO: scroll restoration must be centralized
   combineLatest([
