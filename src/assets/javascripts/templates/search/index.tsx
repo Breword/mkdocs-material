@@ -53,6 +53,15 @@ const path =
   "18.88,20.32L22,23.39L23.39,22L20.31,18.9M16.5,19A2.5,2.5 0 0,1 " +
   "14,16.5A2.5,2.5 0 0,1 16.5,14A2.5,2.5 0 0,1 19,16.5A2.5,2.5 0 0,1 16.5,19Z"
 
+/* Render icon */
+const icon = (path: string) => (
+  <div class="md-search-result__icon md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d={path}></path>
+    </svg>
+  </div>
+)
+
 /* ----------------------------------------------------------------------------
  * Functions
  * ------------------------------------------------------------------------- */
@@ -68,22 +77,13 @@ export function renderSearchResult(
   { article, sections }: SearchResult
 ) {
 
-  /* Render icon */
-  const icon = (
-    <div class="md-search-result__icon md-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d={path}></path>
-      </svg>
-    </div>
-  )
-
   /* Render article and sections */
   const children = [article, ...sections].map(document => {
     const { location, title, text } = document
     return (
       <a href={location} class={css.link} tabIndex={-1}>
         <article class={"parent" in document ? css.section : css.article}>
-          {!("parent" in document) && icon}
+          {!("parent" in document) && icon(path)}
           <h1 class={css.title}>{title}</h1>
           {text.length > 0 && <p class={css.teaser}>{truncate(text, 320)}</p>}
         </article>
@@ -95,6 +95,29 @@ export function renderSearchResult(
   return (
     <li class={css.item}>
       {children}
+    </li>
+  )
+}
+
+export const renderGlobalSearchKeyword = () => {
+  const searchInput = document.querySelector('.md-search__input')
+  const searchKeyword = searchInput.value
+  const searchUrl = `/search?q=${searchKeyword}`
+
+  const magnifyPath =
+    'M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 ' +
+    '14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 ' +
+    '11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 ' +
+    '5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z'
+
+  return (
+    <li class={css.item}>
+      <a href={searchUrl} class={css.link} tabIndex={-1}>
+        <article class={css.article}>
+          {icon(magnifyPath)}
+          <h1 class={css.title}>全局搜索 {searchKeyword} 文档</h1>
+        </article>
+      </a>
     </li>
   )
 }

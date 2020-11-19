@@ -43,7 +43,7 @@ import {
   getElementOrThrow,
 } from "browser"
 import { SearchResult } from "integrations/search"
-import { renderSearchResult } from "templates"
+import { renderSearchResult, renderGlobalSearchKeyword } from "templates"
 
 import { SearchQuery } from "../../query"
 import {
@@ -121,6 +121,13 @@ export function applySearchResult(
         observeOn(animationFrameScheduler),
         scan(index => {
           const container = el.parentElement!
+
+          // 全局搜索指定文档，使得该 search input 同时作为全局搜索框。
+          const searchInput = document.querySelector('.md-search__input') || {}
+          if (searchInput.value) {
+            addToSearchResultList(list, renderGlobalSearchKeyword())
+          }
+
           while (index < result.length) {
             addToSearchResultList(list, renderSearchResult(result[index++]))
             if (container.scrollHeight - container.offsetHeight > 16)
